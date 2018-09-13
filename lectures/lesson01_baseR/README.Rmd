@@ -164,8 +164,8 @@ names(age) <- family
 
 
  - Use inline code `r ##` to print your name and age (using indexing)
-  *The family name is 'r family[6]'*
-  *The age is 'r age[6]'*
+  *The family name is `r family[6]`*
+  *The age is `r age[6]`*
 
  - What happens when:
    + You extract using a positive index bigger than the vector length?
