@@ -1,0 +1,25 @@
+---
+title: "Practice"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fivethirtyeight)
+library(tidyverse)
+
+
+```
+
+
+```{r}
+select(drug_use, age, alcohol_use, cocaine_use, marijuana_use) %>%
+  filter(age %in% c('18','19','20','21','22-23')) %>%
+  gather(key = 'DrugType', value = 'perc', -age) %>%
+  ggplot() +
+  geom_col(aes(x = DrugType, y = perc)) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+  facet_wrap(~age)
+
+```
+

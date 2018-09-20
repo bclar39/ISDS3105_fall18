@@ -235,7 +235,8 @@ titanicDt[titanicDt$Survived == 'No',] %>%
 
 3. Using `beerDt`, calculate the average consumption before and after your birthyear (hint: you may create a new variable)
 ```{r}
-beerDt
+beerDt$before_birthyear <- beerDt$Year < 1971
+
 ```
 
 4. Using `titanicDt`, calulcate the count of casualties by nationality, then arrange descending.
