@@ -143,12 +143,14 @@ selfiesCasualties %>%
 
 1. Using `titanicDt`, arrange by Class, Age, Sex
 ```{r}
-
+titanicDt %>%
+  arrange(Class, Age, Sex)
 ```
 
 2. Using `titanicDt`, arrange descending by `n`
 ```{r}
-
+titanicDt %>%
+  arrange(desc(n))
 ```
 
 ## Manipulate Columns
@@ -165,12 +167,14 @@ To select multiple columns, you can use `class:age` (from variable class to vari
 
 1. Using `sn_revenue`, select only variables for company names and year 2015.
 ```{r}
-
+sn_revenue %>%
+  select(company, ends_with('2015'))
 ```
 
 2. Using `untidyReview`, select only the variables containing review ratings.
 ```{r}
-
+untidyReview %>%
+  select(-reviewId, -reviewStayYear)
 ```
 
 
@@ -183,17 +187,20 @@ selfiesCasualties %>%
 
 1. Using `beerDt`, convert the consumption from gallons per capita to liters (1 gallon 3.78 liters)
 ```{r}
-
+beerDt %>%
+  mutate(LitersCapita = GallonsCapita * 3.78)
 ```
 
 2. Using `socialNetwork_users` add a percent sign to the variable percent (use `paste0()`)
 ```{r}
-
+socialNetwork_users %>%
+  mutate(percent = paste0(percent, '%'))
 ```
 
 3. Using `untidyReview`, turn `reviewStayYear` into a integer
 ```{r}
-
+untidyReview %>%
+  mutate(reviewStayYear = as.integer(reviewStayYear))
 ```
 
 
@@ -209,17 +216,26 @@ selfiesCasualties %>%
 
 1. Using `titanicDt`, calculate the average casualties by class (note that the dataset has both survivors/non-survivors counts)
 ```{r}
+titanicDt[titanicDt$Survived == 'No',] %>%
+  group_by(Class) %>%
+  summarise(average = mean(n))
 
+# titanicDt %>% 
+#  group_by(Class, Survived = "No") %>%
+#  summarise(average = mean(n))
 ```
 
 2. Using `titanicDt`, calculate the average casualties by gender (note that the dataset has both survivors/non-survivors counts)
 ```{r}
-
+titanicDt[titanicDt$Survived == 'No',] %>%
+  group_by(Sex) %>%
+  summarise(average = mean(n))
+  
 ```
 
 3. Using `beerDt`, calculate the average consumption before and after your birthyear (hint: you may create a new variable)
 ```{r}
-
+beerDt
 ```
 
 4. Using `titanicDt`, calulcate the count of casualties by nationality, then arrange descending.
@@ -309,14 +325,21 @@ if (!require(nycflights13)) install.packages('nycflights13')
 1. Use the appropriate join to add the full carrier names to `flights` using `airlines` :
 
 ```{r}
-
+flights2 <- flights %>%
+  left_join(airlines, by = c('carrier' = 'carrier'))
 ```
 
 
 2. Count the number of flights for each carrier using the full carrier name. Then plot a bar chart of the counts.
 
 ```{r}
-
+flights %>%
+  left_join(airlines, by = 'carrier') %>%
+  group_by(name) %>%
+  summarise(tot = n()) %>%
+  ggplot(aes(x = name, y = tot)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 3. Calculate the average visibility for the flights by each carrier. Plot the result in a barchart.

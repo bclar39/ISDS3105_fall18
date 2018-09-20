@@ -28,7 +28,7 @@ However, sometimes you need to transform values before plotting. For instance, c
 
 ```{r}
 #This it the output we are looking for:
-ggplot(data = freqCasualties, aes(x = class, y = n, fill = gender, position=dodge)) + 
+ggplot(data = freqCasualties, aes(x = class, y = n, fill = gender)) + 
   geom_col()
 
 #we want to plot the below chart using selfiesCasualties
