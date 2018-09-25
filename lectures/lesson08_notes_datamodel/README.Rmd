@@ -47,6 +47,8 @@ However, you want to `collect()` as late as possible to make sure you leverage t
 
 #. Report the distinct types of hotels
 
+
+
 #. Report the top 3 hotels with the highest number of rooms (keep only hotelId, hotelName, hotelRooms)
 
 #. Count the independent business (those who do not belong to any brand)
