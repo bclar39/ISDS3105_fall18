@@ -28,6 +28,8 @@ You can think about each geographical entities (e.g., state, country) as polygon
 Maps can be very useful to show the geographical variance of a variable at a glance. For instance, say we want to show on a map the rates of `fivethirtyeight::insurance_premiums`. First, to plot a choropleth map in ggplot, we need to define each region as a polygon. For instance for a map of the US by state:
 
 ```{r}
+install.packages('maps')
+library(maps)
 states <- map_data("state")
 ggplot(data = states) + 
   geom_polygon(aes(x = long, y = lat, group = group), color = "white") + 
@@ -137,7 +139,7 @@ However, the issue with the previous map is that bigger shape somewhat magnetize
 
 ```{r}
 if (!require('geofacet')) install.packages('geofacet')
-
+library('geofacet')
 
 bad_drivers %>% left_join(tibble(abb = state.abb,state = state.name)) %>% 
     mutate(abb = case_when(state=='District of Columbia' ~ 'DC', T ~ abb)) %>% 
@@ -176,6 +178,8 @@ citypremium
 First, we need the coordinates for city names to draw a point on the map for each city. The dataset zipcode form the package `zipcode` containts all US cities:
 
 ```{r}
+if (!require('zipcode')) {install.packages('zipcode')}
+
 library(zipcode)
 data("zipcode") #load the dataset
 ```
@@ -213,6 +217,8 @@ Use the `map_data("world")` and the dataset on [alcohol consumption in the world
 
 ```{r}
 dt <- read_csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv')
+
+
 ```
 
 
