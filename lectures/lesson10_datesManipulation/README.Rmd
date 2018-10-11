@@ -112,14 +112,31 @@ load(here::here('data', 'dataset.RData'))
 dt <- left_join(dt, lkt)
 ```
 
+```{r}
+dt %>%
+  mutate(datetime_text = paste(offensedate, offensetime)) %>%
+  mutate(offense_datetime = ymd_hms(datetime_text)) %>%
+  mutate(dayofweek = wday(offense_datetime, label = T, abbr = F)) %>%
+  group_by(dayofweek) %>%
+  aggregate(object_density = n()) 
+  
+```
+
+
 #. Use `case_when` to refactor `offensetime_discrete` using the following labels:
 
-```{}
-   - >=10.00 pm but <= 5.00 am ----> night
-   - >5.00 am but <= 10.30 am ----> morning
-   - >10.30 am but < 2.00 pm -----> day
-   - >=2.00 am but < 5.30 pm -----> afternoon
-   - anything else ---> evening
+```{r}
+get_discrete_time <- function (src_time){
+  working <- hms(src_time)
+  case_when(
+    working >= hms('22:00:00') | working <= hms('05:00:00') ~ 'night',
+    between(working, hms('05:00:00'), hms('10:30:00')) ~ 'morning',
+    between(working, hms('10:30:00'), hms('14:00:00')) ~ 'day',
+    between(working, hms('14:00:00'), hms('17:30:00')) ~ 'afternoon',
+    TRUE ~ 'evening'
+)   
+  
+}
 ```
 
 
