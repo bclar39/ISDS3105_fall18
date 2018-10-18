@@ -64,16 +64,20 @@ Build a for-loop to calcualte the mean for each element of `t`
 
 ```{r}
 
-output <-       # output
+output <- vector("list", nrow(t))      # output
 
-for (...) {     # sequence
-  ...           # body
+for (idx in seq_along(t$x)) {     # sequence
+  # print(t[[idx]])  
+  output[idx] <- mean(t$x[[idx]])
+  
 }
 ```
 
 Note how "filling" `t` is more efficient than iteratively add elements to `t` using indexing:
 
 ```{r}
+if (!requireNamespace('microbenchmark')) install.packages('microbenchmark')
+
 library(microbenchmark)
 t <- tibble(x = rep(t$x, 100))
 microbenchmark(
@@ -126,6 +130,11 @@ To pass the arguments of the function `.f`, when have to options:
 ```{r}
 #load the environment load(here::here('data', 'dataset.rdata'))
 # calculate the quarterly means of iphoneSales removing NAs
+# load(here::here('data', 'dataset.rdata'))
+#ipsm <- vector('list', length(iphoneSales) - 1)
+map(.x = select(iphoneSales, -year), .f = ~ mean(.x, na.rm = T))
+
+
 
 ```
 
