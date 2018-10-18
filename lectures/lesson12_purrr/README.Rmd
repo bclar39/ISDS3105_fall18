@@ -211,7 +211,18 @@ bad_driversNested$chart[1]
 #' Use map to produce 3 charts: Southern State, Mountain states, Others. 
 #' Follow one of the 2 approaches above or to come up with your own, but don't 
 #' forget to iterate the call to ggplot() rather then typing it down multiple times
+states <- map_data("state") #load the shapefile of US states
+
 mountainStates <- c('Montana', 'Wyoming', 'Colorado', 'New Mexico', 'Idaho', 'Utah', 'Arizona', 'Nevada')
+southernStates <- c('Louisiana', 'Alabama', 'Mississippi', 'Georgia', 'South Carolina')
+
+bad_drivers_region <- bad_drivers %>%
+                        mutate(Region = case_when(state %in% southernStates ~ 'South',
+                                                  state %in% mountainStates ~ 'Mountain',
+                                                   T ~ 'Other'),
+                               state = tolower(state))
+
+
 
 ```
 
