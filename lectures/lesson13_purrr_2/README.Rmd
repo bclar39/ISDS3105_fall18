@@ -88,6 +88,22 @@ Create an ggplot function to draw a linechart of the `AverageRoomRate` over time
 #' want to save each file into ISDS3105_fall/lectures/lesson13_purrr_2/timeLines.
 #' You could use `dir.create()` to create the `timeLines` directory - perhaps conditionally using `dir.exists()`
 #' if the folder does not exists yet.
+tl_dir = here::here('lectures', 'lesson13_purrr_2', 'timeLines')
+if (!dir.exists(tl_dir)) {
+  dir.create(tl_dir)
+}
+
+#WestinTaipei
+make_hotel_perf <- function(perf_data, hotel_name){
+  perf_data %>%
+  filter(hotel == hotel_name) %>%
+  ggplot() +
+  geom_line(aes(x = Month, y = AverageRoomRate)) + 
+    labs(title = paste('Performance for', hotel_name))
+ggsave(paste0(tl_dir, '/', hotel_name, 'chart.png'), device = png())
+}
+
+make_hotel_perf(performance, 'WestinTaipei')
 ```
 
 
