@@ -154,7 +154,7 @@ We want to collect temperature data for Baton Rouge from `tempUrl` for 2016-2017
 
 
 ```{r}
-monthUrl <- 'https://www.usclimatedata.com/climate/baton-rouge/louisiana/united-states/usla0033/2018/10'
+monthUrl <- 'https://www.usclimatedata.com/climate/baton-rouge/louisiana/united-states/usla0033/2018/9'
 
 session <- html_session(monthUrl) 
 session %>% html_nodes('div#history') %>% 
