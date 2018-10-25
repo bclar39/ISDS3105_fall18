@@ -7,6 +7,7 @@ if(!requireNamespace("RSocrata")) install.packages("RSocrata")
 library(RSocrata)
 library(here)
 library(tidyverse)
+library(ggmap)
 
 source(here('lectures/lesson11_openData/tokenSocrata.R'))
 
@@ -110,6 +111,7 @@ m <- ggmap::ggmap(brMap) +
 #' It can take a while to load the map in the viewer. 
 #' You might want to save it as .png to retrieve them faster:
 ggsave('shapemapFlood.png', m, path = here('lectures/lesson11_openData/'))
+
 
 
 
