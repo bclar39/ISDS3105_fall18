@@ -137,6 +137,14 @@ plot_ly(data = dt_crimes, z = ~n, x = ~TempHigh, y = ~Precip,opacity = 0.5) %>%
 ### Exercise
 
  - Using `fit`, calculate a prediction interval for the number of crimes for a day with a max temperature of 84 and no rain, and another day with max temperature 84 and 2 inches of rain.
+```{r}
+toPredict <- data_frame(TempHigh = c(84, 84), TempPrecip = c(0, 2))
+
+pi <- predict(fit, type = 'response', newdata = toPredict, se.fit = T)[1:2] #95% prediction interval = -1.96*se< y-hat < + 1.96*se
+data_frame(fitted = pi$fit, lower = (pi$fit - 1.96*pi$se.fit), upper = (pi$fit + 1.96*pi$se.fit))
+
+```
+ 
  
  - Plot the residuals for fit2 and analyze them. Select 1-2 observations the particularly misbehave and think about possible causes (e.g. gameday? mardi-gras?)
 
