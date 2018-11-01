@@ -6,11 +6,14 @@ output:
     vertical_layout: fill
 editor_options: 
   chunk_output_type: console
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(flexdashboard)
+library(shiny)
+
 ```
 
 ```{r}
@@ -20,7 +23,23 @@ dt <- read_csv(file = 'https://raw.githubusercontent.com/fivethirtyeight/data/ma
 dtYear <- dt %>% gather(key = 'country', value = 'casualties', -iyear)
 #use dtYear to create a dataset total casualties by state and save it to dt
 dt <- dtYear %>% group_by(country) %>% summarise(total = sum(casualties))
+
 ```
+
+```{r}
+statesNames <- setNames(unique(dt$country), unique(dt$country)) %>% as.list()
+
+selectInput("country1", label = h4("Country 1"),
+            choices = statesNames,
+            selected = 'Belgium')
+
+
+selectInput("country2", label = h4("Country 2"),
+            choices = statesNames,
+            selected = 'United Kingdom')
+```
+
+
 
 
 Column {data-width=650}
@@ -29,27 +48,53 @@ Column {data-width=650}
 ### Europe
 
 ```{r}
-ggplot(data = dt) +
-  geom_col(aes(x = country, total))
+renderPlot({
+  dt %>% mutate(selected = country %in% c(input$country1, input$country2)) %>%
+  ggplot() +
+  geom_col(aes(x = country, y = total, fill = selected)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+})
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### State 1
+
+```{r}
+# function
+
+plot_country <- function(src_dt, country_name) {
+  src_dt %>%
+    filter(country==country_name) %>%
+    ggplot() +
+    scale_x_continuous("iyear") +
+    geom_line(aes(x = iyear, y = casualties))
+    
+
+}
+```
+
+
+### `r renderText(input$country1)`
 
 ```{r}
 
 #plot a linechart of the yearly casualties for 1 country (using dtYear)
-
+renderPlot({
+plot_country(dtYear, input$country1)  
+})
 
 ```
 
-### State 2
+### `r renderText(input$country2)`
 
 ```{r}
 
 #plot a linechart of the yearly casualties for 1 country (using dtYear)
+renderPlot({
+plot_country(dtYear, input$country2)
+  
+})
 
 ```
 

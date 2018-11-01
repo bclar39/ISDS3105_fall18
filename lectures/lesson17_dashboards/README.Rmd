@@ -30,7 +30,7 @@ dt <- read_csv(file = 'https://raw.githubusercontent.com/fivethirtyeight/data/ma
 
 The final output is to build this [webapp](https://dario.shinyapps.io/terrorismApp_3/) to display data of terrosism casualties in Europe:
 
- 1. Filling the dashboard tempalte with static barcharts `terrosimApp_1`
+ 1. Filling the dashboard template with static barcharts `terrosimApp_1`
  2. Adding interactivity to the barcharts to allow selection of the state to plot `terrorismApp_2`.
  3. Adding a botton to rescale the vertical axes of the interactive charts.
 
