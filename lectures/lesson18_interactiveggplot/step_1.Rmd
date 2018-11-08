@@ -17,15 +17,22 @@ knitr::opts_chunk$set(echo = F)
 ### A tool for exploratory visualization of insurance data
 
 ```{r}
+bd_col <- names(bad_drivers)
 #use selectInput() to create a dropdown menu
+selectInput("thing_selected", "Select Something Buddy", choices = bd_col)
 #you can use html code to position the input widget ----  e.g. div(style="display:inline-block", .... )
 ```
 
 
 ```{r}
 #read about `aes_string`. You want to use `aes_string` instead of `aes` since `selectInput` returns a character.
+
+# seriously 'aes_string'
+
 renderPlot({
 #put the ggplot object here to make it reactive
+  ggplot() +
+    
 })
 ```
 
