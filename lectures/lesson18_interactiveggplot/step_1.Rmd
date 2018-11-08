@@ -32,7 +32,7 @@ selectInput("thing_selected", "Select Something Buddy", choices = bd_col)
 renderPlot({
 #put the ggplot object here to make it reactive
   ggplot() +
-    
+    geo
 })
 ```
 
